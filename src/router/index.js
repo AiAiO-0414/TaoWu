@@ -1,26 +1,57 @@
+import { IndexBar } from 'vant'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue' // 引入 Home页面组件
-import Test from '../views/Test.vue' // 引入 Test页面组件
+import Index from '../views/Index.vue' // 引入 Home页面组件
 
 // 注册路由插件
 Vue.use(VueRouter)
 
-const routes = [{
-        path: '/',
-        name: 'Home',
-        component: Home
+const routes = [
+    {
+        path:'/',
+        redirect:'/home/Index'
     },
     {
-        path: '/about',
-        name: 'About',
-        component: () => import('../views/About.vue')
+        path: '/home',
+        component: Index,
+        children: [
+            {
+                path: 'index',
+                name: 'Home',
+                component: () => import('../views/Home.vue'),
+                meta:{
+                    name:'Home',
+                    isMainPage:true,
+                }
+            },
+            {
+                path: 'aboutuser',
+                name: 'Aboutuser',
+                component: () => import('../views/Aboutuser.vue'),
+                meta:{
+                    name:'user',
+                    isMainPage:true
+                }
+            },
+            {
+                path: 'goodscart',
+                name: 'Goodscart',
+                component: () => import('../views/Goodscart.vue'),
+                meta:{
+                    name:'cart',
+                    isMainPage:true
+                }
+            },
+        ]
     },
     {
-        path: '/test',
-        name: 'Test',
-        component: Test
-    },
+        path:'/goodslist',
+        name:'GoodsList',
+        component: () => import('../views/GoodsList.vue'),
+        meta:{
+           title:'商品列表'
+        }
+    }
 ]
 
 const router = new VueRouter({
