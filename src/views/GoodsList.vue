@@ -1,13 +1,16 @@
 <template>
-  <h1>GoodsList</h1>
+    <Goods></Goods>
 </template>
 
 <script>
+import Goods from "../common/Goods.vue";
 export default {
-
-}
+  components: {
+    Goods,
+  },
+};
 </script>
 
-<style>
+<style lang="scss">
 
 </style>

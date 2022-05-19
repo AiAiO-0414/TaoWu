@@ -1,11 +1,14 @@
 <template>
   <div>
     <router-view></router-view>
-    <van-tabbar v-model="active">
+    <div class="tabbar">
+      <van-tabbar v-model="active">
       <van-tabbar-item icon="home-o" to="/home/index">主页</van-tabbar-item>
-      <van-tabbar-item icon="search" to="/home/goodscart">购物车</van-tabbar-item>
+      <van-tabbar-item icon="shopping-cart-o" to="/home/goodscart">购物车</van-tabbar-item>
       <van-tabbar-item icon="friends-o" to="/home/aboutuser">个人中心</van-tabbar-item>
     </van-tabbar>
+    </div>
+    
   </div>
 </template>
 
@@ -36,4 +39,10 @@ export default {
 </script>
 
 <style>
+    .van-tabbar  {
+        background: #fae2ff;
+    }
+    .van-tabbar-item--active {
+        background: #fae2ff;
+    }
 </style>

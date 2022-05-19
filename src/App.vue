@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <van-nav-bar nav-bar-text-color="pink"
+    <van-nav-bar
+      nav-bar-text-color="pink"
       :title="title"
       left-text="返回"
       right-text="按钮"
@@ -15,38 +16,37 @@
 
 <script>
 export default {
-    data() {
-        return {
-            isShowNavBar:false,
-            title:''
-        }
-    },
+  data() {
+    return {
+      isShowNavBar: false,
+      title: "",
+    };
+  },
   methods: {
-    
     onClickRight() {},
   },
-  watch:{
-      '$route':{
-          handler:function(newRoute,oldRoute) {
-                let {isMainPage,title} = newRoute.meta
-                if(isMainPage) {
-                    this.isShowNavBar = false
-                }else {
-                    this.isShowNavBar = true
-                }
-                this.title = title
-            },
-            //立即执行，刷新后也会立即执行
-            // immediate:true
+  watch: {
+    $route: {
+      handler: function (newRoute, oldRoute) {
+        let { isMainPage, title } = newRoute.meta;
+        this.isShowNavBar = !isMainPage;
+        this.title = title;
       }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss">
+@import './assets/scss/common.scss';
 #app {
   min-width: 320px;
   max-width: 750px;
   margin: 0 auto;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 </style>
 
