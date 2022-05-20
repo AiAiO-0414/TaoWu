@@ -14,6 +14,13 @@ import {
     Divider,
     Lazyload,
     Sticky,
+    Tag,
+    PullRefresh,
+    List,
+    Image as VanImage,
+    GoodsAction,
+    GoodsActionButton,
+    GoodsActionIcon,
 } from 'vant';
 
 Vue.use(Button);
@@ -30,3 +37,10 @@ Vue.use(Lazyload, {
   lazyComponent: true,
 });
 Vue.use(Sticky);
+Vue.use(Tag);
+Vue.use(PullRefresh);
+Vue.use(List);
+Vue.use(VanImage);
+Vue.use(GoodsAction);
+Vue.use(GoodsActionButton);
+Vue.use(GoodsActionIcon);

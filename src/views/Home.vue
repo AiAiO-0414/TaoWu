@@ -2,14 +2,14 @@
   <div class="home-container">
     <!-- 搜索框 -->
     <van-sticky>
-    <div class="searchWarp">
-      <div class="logo">
-        <img src="../assets/images/favicon.png" alt />
+      <div class="searchWarp">
+        <div class="logo">
+          <img src="../assets/images/favicon.png" alt />
+        </div>
+        <div class="search">
+          <van-search background="rgb(200 237 255)" shape="round" placeholder="索尼相机" />
+        </div>
       </div>
-      <div class="search">
-        <van-search background="#fae2ff" shape="round" placeholder="请输入搜索关键词" />
-      </div>
-    </div>
     </van-sticky>
     <!-- 轮播图 -->
     <div>
@@ -29,10 +29,12 @@
       </van-grid-item>
     </van-grid>
     <!-- 推荐商品 -->
-    <van-divider>推荐商品</van-divider>
+    <!-- <van-divider>推荐商品</van-divider> -->
+    <van-divider :style="{ color: '#907e92', borderColor: '#907e92', padding: '0 16px' }">推荐商品</van-divider>
     <!-- 商品列表 -->
-      <!-- <Goods v-for="item in goods" :key="item.id"></Goods> -->
-      <Goods></Goods>
+    <div class="goodsList">
+      <Goods v-for="item in  goods" :key="item.id" :data="item" @detailClick="toDetailPage"></Goods>
+    </div>
   </div>
 </template>
 
@@ -54,64 +56,66 @@ export default {
       swipes: [],
       goods: [],
       gridItem: [
-        { text: "乐淘超市", img: png1 },
-        { text: "新闻列表", img: png2 },
-        { text: "乐淘生鲜", img: png3 },
-        { text: "生活缴费", img: png4 },
-        { text: "领津贴", img: png5 },
-        { text: "plus会员", img: png6 },
-        { text: "领乐豆", img: png7 },
-        { text: "更多", img: morePng },
+        { text: "淘物超市", img: png1, to: "/GoodsList" },
+        { text: "新闻列表", img: png2, to: "/GoodsList" },
+        { text: "淘物生鲜", img: png3, to: "/GoodsList" },
+        { text: "生活缴费", img: png4, to: "/GoodsList" },
+        { text: "领津贴", img: png5, to: "/GoodsList" },
+        { text: "plus会员", img: png6, to: "/GoodsList" },
+        { text: "领乐豆", img: png7, to: "/GoodsList" },
+        { text: "更多", img: morePng, to: "/GoodsList" },
       ],
     };
   },
   created() {
     this._fetchSwipe();
-    // this._fetchRecommend();
+    this._fetchRecommend();
   },
   methods: {
     async _fetchSwipe() {
       let { message } = await fetchSwipe();
-      // console.log(message);
       this.swipes = message;
     },
-    // async _fetchRecommend() {
-    //   let { message } = await fetchRecommend();
-    //   console.log(message);
-    //   this.goods = message;
-    // },
+    async _fetchRecommend() {
+      let { message } = await fetchRecommend();
+      console.log(message);
+      this.goods = message;
+    },
+    toDetailPage(event,data){
+       this.$router.push(`/goodsDetail/${data.id}`)
+    },
   },
   components: {
     // GoodsList,
-    Goods
+    Goods,
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .home-container {
-  .van-sticky  {
-    background:#fae2ff;
+  .van-sticky {
+    background: #fae2ff;
     // background:#fff;
-  .searchWarp {
-    display: flex;
-    // align-items: center;
-    .logo {
-      width: 60px;
-      // height: 60px;
-      padding: 0px 3px;
-      background:#fae2ff;
-      // background: #fff;
-      img {
-        width: 100%;
-        height: 100%;
-        transform: scale(0.8);
+    .searchWarp {
+      display: flex;
+      // align-items: center;
+      .logo {
+        width: 60px;
+        // height: 60px;
+        padding: 0px 3px;
+        background: rgb(200 237 255);
+        // background: #fff;
+        img {
+          width: 100%;
+          height: 100%;
+          transform: scale(0.8);
+        }
       }
-    }
-    .search {
-      background: #fae2ff;
-      flex: 1;
-    }
+      .search {
+        background: rgb(200 237 255);
+        flex: 1;
+      }
     }
   }
   .my-swipe {
@@ -141,6 +145,12 @@ export default {
       }
     }
   }
-  
+
+  .goodsList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background: rgba(234, 231, 231, 0.368627451);
+  }
 }
 </style>
