@@ -21,8 +21,19 @@ import {
     GoodsAction,
     GoodsActionButton,
     GoodsActionIcon,
+    Sku,
+    SwipeCell,
+    Card,
+    Checkbox,
+    CheckboxGroup,
+    SubmitBar,
+    Stepper,
+    Empty,
+    AddressEdit,
 } from 'vant';
 
+Vue.use(AddressEdit);
+Vue.use(Empty);
 Vue.use(Button);
 Vue.use(Tabbar);
 Vue.use(TabbarItem);
@@ -44,3 +55,10 @@ Vue.use(VanImage);
 Vue.use(GoodsAction);
 Vue.use(GoodsActionButton);
 Vue.use(GoodsActionIcon);
+Vue.use(Sku);
+Vue.use(SwipeCell);
+Vue.use(Card);
+Vue.use(Checkbox);
+Vue.use(CheckboxGroup);
+Vue.use(SubmitBar);
+Vue.use(Stepper);

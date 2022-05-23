@@ -41,7 +41,8 @@ const routes = [
                 component: () => import('../views/Goodscart.vue'),
                 meta:{
                     name:'cart',
-                    isMainPage:true
+                    title:'购物车'
+                    // isMainPage:true
                 }
             },
         ]
@@ -60,6 +61,20 @@ const routes = [
         component: () => import('../views/GoodsDetail.vue'),
         meta: {
             title: "商品详情",
+        }
+    },
+    {
+        path: "/addressedit",
+        component: () => import('../views/AddressEdit.vue'),
+        meta: {
+            title: "地址编辑",
+        }
+    },
+    {
+        path: "/address",
+        component: () => import('../views/Addaddress.vue'),
+        meta: {
+            title: "地址编辑",
         }
     },
 ]

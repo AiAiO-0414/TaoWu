@@ -4,7 +4,7 @@
     <van-sticky>
       <div class="searchWarp">
         <div class="logo">
-          <img src="../assets/images/favicon.png" alt />
+          <img src="../assets/images/logo3.png" alt />
         </div>
         <div class="search">
           <van-search background="rgb(200 237 255)" shape="round" placeholder="索尼相机" />
@@ -78,7 +78,6 @@ export default {
     },
     async _fetchRecommend() {
       let { message } = await fetchRecommend();
-      console.log(message);
       this.goods = message;
     },
     toDetailPage(event,data){
