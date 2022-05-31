@@ -5,8 +5,7 @@
       show-postal
       show-delete
       show-set-default
-      show-search-result
-      :search-result="searchResult"
+      :address-info="areaInfo"
       :area-columns-placeholder="['请选择', '请选择', '请选择']"
       @delete="onDelete"
       @change-area="changeArea"
@@ -18,32 +17,54 @@
 
 <script>
 import { areaList } from "@vant/area-data";
+import { fetchUpdUserAddress,fetchDelUserAddress } from "../api/address.js";
 export default {
   data() {
     return {
       areaList,
-      searchResult: [],
+      code: "",
+      isDefault: "",
+      fromAddressInfo: JSON.parse(this.$route.params.addressInfo), //当前点击的地址
     };
   },
+  created() {
+    this.code = this.fromAddressInfo.areaCode;
+    this.isDefault = this.fromAddressInfo.isDefault;
+  },
+  computed: {
+    areaInfo() {
+      let address = JSON.parse(this.$route.params.addressInfo);
+      address.isDefault = !!address.isDefault;
+      address.areaCode = address.areaCode.split("-")[2];
+      return address;
+    },
+  },
   methods: {
-    onSave() {
-      Toast("save");
-    },
-    onDelete() {
-      Toast("delete");
-    },
-    onChangeDetail(val) {
-      if (val) {
-        this.searchResult = [
-          {
-            name: "黄龙万科中心",
-            address: "杭州市西湖区",
-          },
-        ];
-      } else {
-        this.searchResult = [];
+    async onSave(areaInfo) {
+      let user_id = this.$store.state.userInfo.id
+      areaInfo.isDefault = areaInfo.isDefault ? 1 : 0
+      areaInfo.country = areaInfo.county
+      let updData = {
+        ...areaInfo,
+        areaCode:this.code 
+      }
+      console.log(updData);
+      let {message,status} = await fetchUpdUserAddress(areaInfo.id,updData)
+      this.$toast(message);
+      if(status === 0) {
+        this.$router.back()
       }
     },
+    async onDelete(areaData) {
+      let {message,status} = await fetchDelUserAddress(areaData.id)
+      if(status === 0 ){
+        this.$router.back()
+      }
+    },
+    changeArea(areaCodes) {
+      this.code = areaCodes.map(item=> item.code).join('-')
+    },
+    changeDefault() {},
   },
 };
 </script>

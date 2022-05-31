@@ -16,8 +16,8 @@ const instance = axios.create({
 instance.interceptors.request.use(function (config) {
     // 若有token,添加请求头token给服务器校验(获取的有时是旧token)
     // console.log('请求拦截器-token:', store.state.token)
-    if (store.state.token) {
-        config.headers['token'] = store.state.token;
+    if(store.state.token){
+        config.headers['token'] = store.state.token
     }
     // 告诉服务器，不需要缓存
     // If-Modified-Since 是标准的HTTP请求头标签，在发送HTTP请求时，
@@ -43,6 +43,7 @@ instance.interceptors.response.use(function (response) {
         // 清空token、用户信息
         store.commit('clearUserInfo')
         Toast(response.data.message)
+        console.log(response.data.message);
         // 打回到登录页面,登录成功之后，回到当前所访问的页面(redirect)
         router.replace({
             path: "/login",

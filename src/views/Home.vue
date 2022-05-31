@@ -7,7 +7,7 @@
           <img src="../assets/images/logo3.png" alt />
         </div>
         <div class="search">
-          <van-search background="rgb(200 237 255)" shape="round" placeholder="索尼相机" />
+          <van-search background="rgb(200 237 255)" shape="round" placeholder="索尼相机" @focus="$router.push('/home/index/search')" />
         </div>
       </div>
     </van-sticky>
@@ -35,6 +35,9 @@
     <div class="goodsList">
       <Goods v-for="item in  goods" :key="item.id" :data="item" @detailClick="toDetailPage"></Goods>
     </div>
+    <!-- 返回顶部 -->
+    <BackTop :top="500" />
+    <router-view></router-view>
   </div>
 </template>
 
@@ -42,6 +45,7 @@
 import { fetchSwipe, fetchRecommend } from "../api/home.js";
 import GoodsList from "../views/GoodsList.vue";
 import Goods from "../common/Goods.vue";
+import BackTop from "../common/BackTop.vue";
 import png1 from "../assets/images/1.png";
 import png2 from "../assets/images/2.png";
 import png3 from "../assets/images/3.png";
@@ -85,8 +89,8 @@ export default {
     },
   },
   components: {
-    // GoodsList,
     Goods,
+    BackTop,
   },
 };
 </script>
@@ -95,6 +99,7 @@ export default {
 .home-container {
   .van-sticky {
     background: #fae2ff;
+    width: 100%;
     // background:#fff;
     .searchWarp {
       display: flex;

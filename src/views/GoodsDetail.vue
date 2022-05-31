@@ -25,7 +25,12 @@
     <!-- 商品底部栏 -->
     <van-goods-action>
       <van-goods-action-icon icon="chat-o" text="客服" />
-        <van-goods-action-icon icon="cart-o"  @click="$router.push('/home/goodscart')" text="购物车" :badge="$store.getters.getTotalNumber" />
+      <van-goods-action-icon
+        icon="cart-o"
+        @click="$router.push('/home/goodscart')"
+        text="购物车"
+        :badge="$store.getters.getTotalNumber"
+      />
       <van-goods-action-button
         color="rgb(91 185 255)"
         type="warning"
@@ -46,7 +51,7 @@
       :goods="goods"
       :show-add-cart-btn="isShowAddCartBtn"
       :goods-id="info.id"
-      :hide-stock="sku.hide_stock" 
+      :hide-stock="sku.hide_stock"
       :reset-stepper-on-hide="true"
       @add-cart="onAddGoodsCart"
       @buy-clicked="buyClicked"
@@ -76,25 +81,25 @@ export default {
       sku: {
         // 数据结构见下方文档
         tree: [
-        //   {
-        //     k: "规格", // skuKeyName：规格类目名称
-        //     k_s: "s1", // skuKeyStr：sku 组合列表（下方 list）中当前类目对应的 key 值，value 值会是从属于当前类目的一个规格值 id
-        //     v: [
-        //       {
-        //         id: "1", // skuValueId：规格值 id
-        //         name: "32G", // skuValueName：规格值名称
-        //         imgUrl: "http://test.w0824.com/huaweiry.png", // 规格类目图片，只有第一个规格类目可以定义图片
-        //         previewImgUrl: "http://test.w0824.com/huaweiry.png", // 用于预览显示的规格类目图片
-        //       },
-        //       {
-        //         id: "2",
-        //         name: "64G",
-        //         imgUrl: "http://test.w0824.com/huaweiry2.png",
-        //         previewImgUrl: "http://test.w0824.com/huaweiry2.png",
-        //       },
-        //     ],
-        //     largeImageMode: true, //  是否展示大图模式
-        //   },
+          //   {
+          //     k: "规格", // skuKeyName：规格类目名称
+          //     k_s: "s1", // skuKeyStr：sku 组合列表（下方 list）中当前类目对应的 key 值，value 值会是从属于当前类目的一个规格值 id
+          //     v: [
+          //       {
+          //         id: "1", // skuValueId：规格值 id
+          //         name: "32G", // skuValueName：规格值名称
+          //         imgUrl: "http://test.w0824.com/huaweiry.png", // 规格类目图片，只有第一个规格类目可以定义图片
+          //         previewImgUrl: "http://test.w0824.com/huaweiry.png", // 用于预览显示的规格类目图片
+          //       },
+          //       {
+          //         id: "2",
+          //         name: "64G",
+          //         imgUrl: "http://test.w0824.com/huaweiry2.png",
+          //         previewImgUrl: "http://test.w0824.com/huaweiry2.png",
+          //       },
+          //     ],
+          //     largeImageMode: true, //  是否展示大图模式
+          //   },
         ],
         // list: [
         //   {
@@ -125,6 +130,12 @@ export default {
   created() {
     this._fetchGoodsImages();
     this._fetchGoodsInfo();
+    console.log(222);
+  },
+  activated() {
+    this._fetchGoodsImages();
+    this._fetchGoodsInfo();
+    console.log(111);
   },
   methods: {
     async _fetchGoodsImages() {
@@ -158,17 +169,21 @@ export default {
     },
     //加入购物车后依然在当前页面
     onAddGoodsCart(skuData) {
+      if (this.$store.state.userInfo.length === 0) {
+        this.$toast("请先登录账号");
+        return;
+      }
       let { goodsId, selectedNum } = skuData;
       let price = this.info.sell_price;
       let title = this.info.title;
-      let img =  this.thumb[0].src
+      let img = this.thumb[0].src;
 
       let item = {
         id: goodsId,
         number: selectedNum,
         price: price,
-        img:img,
-        title:title,
+        img: img,
+        title: title,
         checked: true,
       };
       this.$store.commit("addGoodsCart", item);
@@ -178,7 +193,12 @@ export default {
       });
     },
     //立即购买后条状到购物车页面
-    buyClicked() {},
+    buyClicked() {
+      if (this.$store.state.userInfo.length === 0) {
+        this.$toast("请先登录账号");
+        return;
+      }
+    },
   },
   // props:['id']
 };

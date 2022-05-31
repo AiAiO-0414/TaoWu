@@ -30,8 +30,33 @@ import {
     Stepper,
     Empty,
     AddressEdit,
+    Form,
+    Field,
+    Icon,
+    Cell,
+    AddressList,
+    Tab,
+    Tabs,
+    Popup,
+    Step,
+    Steps,
+    DropdownMenu,
+    DropdownItem,
 } from 'vant';
 
+
+Vue.use(DropdownMenu);
+Vue.use(DropdownItem);
+Vue.use(Step);
+Vue.use(Steps);
+Vue.use(Popup);
+Vue.use(Tab);
+Vue.use(Tabs);
+Vue.use(AddressList);
+Vue.use(Cell);
+Vue.use(Icon);
+Vue.use(Form);
+Vue.use(Field);
 Vue.use(AddressEdit);
 Vue.use(Empty);
 Vue.use(Button);

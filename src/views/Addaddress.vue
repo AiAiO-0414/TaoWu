@@ -4,8 +4,6 @@
       :area-list="areaList"
       show-postal
       show-set-default
-      show-search-result
-      :search-result="searchResult"
       :area-columns-placeholder="['请选择', '请选择', '请选择']"
       @save="onSave"
       @change-area="changeArea"
@@ -14,26 +12,38 @@
 </template>
 
 <script>
-import { areaList } from '@vant/area-data';
-import { fetchAddUserAddress  } from "../api/address.js"
+import { areaList } from "@vant/area-data";
+import { fetchAddUserAddress } from "../api/address.js";
 
 export default {
-    data() {
-        return {
-            areaList,
-            searchResult: [],
-        }
+  data() {
+    return {
+      areaList,
+      code:''
+    };
+  },
+  methods: {
+    async onSave(areaInfo) {
+      let user_id = this.$store.state.userInfo.id
+      areaInfo.isDefault = areaInfo.isDefault ? 1 : 0;
+      areaInfo.country = areaInfo.county;
+      let data = {
+        ...areaInfo,
+        areaCode:this.code 
+      }
+      let {message,status} = await fetchAddUserAddress(user_id,data)
+      this.$router.back('/AddressList')
     },
-    methods: {
-        onSave(){
-
-        },
-        changeArea() {
-
-        },
+    changeArea(areaCodes) {
+      this.code = areaCodes.map(item=> item.code).join('-')
     },
+  },
 };
 </script>
 
-<style lang="scss" scoped>
+<style>
+.van-address-list__bottom  button{
+    background-color: #467ce8;
+    border: 1px solid #467ce8;
+}
 </style>
